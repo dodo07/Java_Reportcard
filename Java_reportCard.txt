@@ -1,0 +1,162 @@
+package reportcard;
+
+public class Student {
+	String name;
+	int language;
+	int math;
+	int english;
+	int sum;
+	double average;
+	int rank;
+	
+	public Student(String name, int language, int math, int english) {
+		this.name = name;
+		this.language = language;
+		this.math = math;
+		this.english = english;
+		sum = language + math + english;
+		average = (double)sum / 3;
+	
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(int language) {
+		this.language = language;
+	}
+
+	public int getMath() {
+		return math;
+	}
+
+	public void setMath(int math) {
+		this.math = math;
+	}
+
+	public int getEnglish() {
+		return english;
+	}
+
+	public void setEnglish(int english) {
+		this.english = english;
+	}
+
+	public int getSum() {
+		return sum;
+	}
+
+	public void setSum(int sum) {
+		this.sum = sum;
+	}
+
+	public double getAverage() {
+		return average;
+	}
+
+	public void setAverage(double average) {
+		this.average = average;
+	}
+
+	public int getRank() {
+		return rank;
+	}
+
+	public void setRank(int rank) {
+		this.rank = rank;
+	}
+
+	public void ShowInfor() {
+
+		System.out.println(name+"\t"+language+"\t"+math +"\t"+english+"\t"+sum+"\t"+String.format("%.2f",average)+"\t"+rank);
+		
+	}
+	
+}
+
+
+package reportcard;
+
+import java.util.Scanner;
+
+public class Reportcard {
+	
+	private static int count = 1;
+	private static Student[] students = new Student[20];
+		
+	public static void insertScore() {
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Insert student name :");
+		String name = scan.nextLine();
+		System.out.println("Insert language score :");
+		int languageScore = scan.nextInt();
+		System.out.println("Insert math score :");
+		int mathScore = scan.nextInt();
+		System.out.println("Insert english score :");
+		int englishScore = scan.nextInt();
+		students[count] = new Student(name,languageScore,mathScore,englishScore);
+	}
+	
+	public static void CheckScore() {
+		System.out.println("Name\tLan\tMath\tEng\tSum\tAver\tRank");
+		
+		//rank calculation 
+		
+		for(int i = 1;i<count;i++)	{
+			students[i].rank = 1;
+			for(int j = 1;j<count;j++) {
+				if(students[i].average < students[j].average)
+				{
+					students[i].rank = students[i].rank + 1; 
+				}
+			}
+		}
+
+		for(int i = 1;i<count;i++){
+			students[i].ShowInfor();
+		}
+		
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		System.out.println("-------Make report card-------");
+		while(true)
+		{
+			System.out.println("Insert numbers : 1. insert score, 2. Check students score, 3. finish");
+			Scanner scan = new Scanner(System.in);
+			int insertNum = scan.nextInt();
+		
+			if(insertNum == 1)
+			{
+				insertScore();
+				count++;
+			}
+			
+			else if(insertNum == 2)
+			{
+				CheckScore();
+			}
+			else if(insertNum == 3)
+			{
+				break;
+			}
+			else
+			{
+				System.out.println("please insert correct numbers(1~3)");
+			}
+		}
+	}
+
+}
